@@ -1,5 +1,7 @@
 package leo.awatin.com.e_seebudget;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,14 +42,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (item.getItemId()) {
-            case R.id.nav_balance;
+            case R.id.nav_balance
                 getSupportFragmentManager().beginTransaction().replace( R.id.fragment_container );
                 break;
-            case R.id.nav_settings;
+            case R.id.nav_settings
                 getSupportFragmentManager().beginTransaction().replace( R.id.fragment_container );
                 break;
-            case R.id.nav_feedback;
-
+            case R.id.nav_feedback
+                helpAndFeedback();
                 break;
         }
         drawer.closeDrawer( GravityCompat.START );
@@ -61,5 +63,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             super.onBackPressed();
         }
+    }
+
+    public void  helpAndFeedback(){
+        Intent h = null, chooser = null;
+        h = new Intent(Intent.ACTION_SEND);
+        h.setData( Uri.parse("mailto:"));
+        String[] to = {"2row4way@gmail.com"};
+        h.putExtra(Intent.EXTRA_EMAIL,to);
+        h.putExtra(Intent.EXTRA_SUBJECT, "Help and Feedback");
+        h.putExtra(Intent.EXTRA_TEXT, "Put your question or feedback here!");
+        h.setType("message/rfc822");
+        chooser = Intent.createChooser(h, "Select your email app:");
+        startActivity(chooser);
     }
 }
